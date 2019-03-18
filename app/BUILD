@@ -5,15 +5,21 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "rollup_bundle")
 
 ng_module(
     name = "app",
-    srcs = glob(["*.ts"]),
+    srcs = [
+        "app.component.ts",
+        "app.module.ts",
+        "main.factory.ts",
+        # polyfills.ts
+    ],
     assets = [],
+    module_name = "@npmscope/app",
     deps = [
         "//ui",
         "@npm//@types",
-        "@npm//@angular/core",
+        # "@npm//@angular/core",
+        # This is needed otherwise target won't compile.
         "@npm//@angular/material", #required pre-ivy
         "@npm//@angular/platform-browser",
-        "@npm//rxjs",
     ],
 )
 
@@ -22,7 +28,8 @@ rollup_bundle(
     entry_point = "app/main.factory.js",
     deps = [
         ":app",
-        "@npm//@angular/material", #required pre-ivy
+        # This is not needed, it'd cause duplicate modules.
+        # "@npm//@angular/material", #required pre-ivy
         "@npm//rxjs",   #required pre-ivy
     ],
 )
@@ -32,10 +39,13 @@ web_package(
    name = "devapp",
    index_html = "index.html",
    assets = [
+        # do not sort
+        "@npm//node_modules/zone.js:dist/zone.min.js",
        ":bundle.js",
    ],
    data = [
-       ":bundle", # Make all bundles/source-maps available
+       # Speed up compilation, not all outputs of `bundle` are needed
+    #    ":bundle", # Make all bundles/source-maps available
    ],
 )
 

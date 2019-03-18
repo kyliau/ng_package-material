@@ -6,7 +6,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "build_bazel_rules_nodejs",
     sha256 = "5c86b055c57e15bf32d9009a15bcd6d8e190c41b1ff2fb18037b75e0012e4e7c",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.26.0/rules_nodejs-0.26.0.tar.gz"],
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.27.5/rules_nodejs-0.27.5.tar.gz"],
 )
 
 http_archive(
